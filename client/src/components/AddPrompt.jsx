@@ -15,7 +15,10 @@ function AddPrompt({ fetchPrompts }) {
     }
     const handleSubmit = async (e) => {
         e.preventDefault()
-        await axios.post('http://localhost:5000/api/prompts', formData)
+        await axios.post(
+            `${process.env.REACT_APP_API_URL}/api/prompts`,
+            formData
+        )
         fetchPrompts()
         setFormData({
             title: '',
@@ -55,4 +58,4 @@ function AddPrompt({ fetchPrompts }) {
             <button type="submit">Add Prompt</button>
         </form>
     )
-} export default AddPrompt     
+} export default AddPrompt

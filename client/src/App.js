@@ -7,18 +7,22 @@ import './App.css'
 function App() {
   const [prompts, setPrompts] = useState([])
   const fetchPrompts = async () => {
-    const response = await axios.get('http://localhost:5000/api/prompts')
+    const response = axios.get(`${process.env.REACT_APP_API_URL}/api/prompts`)
     setPrompts(response.data)
   }
   useEffect(() => {
     fetchPrompts()
   }, [])
   const deletePrompt = async (id) => {
-    await axios.delete(`http://localhost:5000/api/prompts/${id}`)
+    axios.delete(
+      `${process.env.REACT_APP_API_URL}/api/prompts/${id}`
+    )
     fetchPrompts()
   }
   const likePrompt = async (id) => {
-    await axios.put(`http://localhost:5000/api/prompts/like/${id}`)
+    axios.put(
+      `${process.env.REACT_APP_API_URL}/api/prompts/like/${id}`
+    )
     fetchPrompts()
   }
   return (
