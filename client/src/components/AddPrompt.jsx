@@ -1,5 +1,8 @@
 import { useState } from 'react'
 import axios from 'axios'
+
+const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000'
+
 function AddPrompt({ fetchPrompts }) {
     const [formData, setFormData] = useState({
         title: '',
@@ -7,16 +10,18 @@ function AddPrompt({ fetchPrompts }) {
         description: '',
         promptText: ''
     })
+
     const handleChange = (e) => {
         setFormData({
             ...formData,
             [e.target.name]: e.target.value
         })
     }
+
     const handleSubmit = async (e) => {
         e.preventDefault()
         await axios.post(
-            `${process.env.REACT_APP_API_URL}/api/prompts`,
+            `${API_BASE_URL}/api/prompts`,
             formData
         )
         fetchPrompts()
@@ -27,6 +32,7 @@ function AddPrompt({ fetchPrompts }) {
             promptText: ''
         })
     }
+
     return (
         <form onSubmit={handleSubmit}>
             <input

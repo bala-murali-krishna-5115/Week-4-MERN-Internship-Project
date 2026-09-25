@@ -4,27 +4,31 @@ import Navbar from './components/Navbar'
 import AddPrompt from './components/AddPrompt'
 import PromptList from './components/PromptList'
 import './App.css'
+
+const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000'
+
 function App() {
   const [prompts, setPrompts] = useState([])
+
   const fetchPrompts = async () => {
-    const response = axios.get(`${process.env.REACT_APP_API_URL}/api/prompts`)
+    const response = await axios.get(`${API_BASE_URL}/api/prompts`)
     setPrompts(response.data)
   }
+
   useEffect(() => {
     fetchPrompts()
   }, [])
+
   const deletePrompt = async (id) => {
-    axios.delete(
-      `${process.env.REACT_APP_API_URL}/api/prompts/${id}`
-    )
+    await axios.delete(`${API_BASE_URL}/api/prompts/${id}`)
     fetchPrompts()
   }
+
   const likePrompt = async (id) => {
-    axios.put(
-      `${process.env.REACT_APP_API_URL}/api/prompts/like/${id}`
-    )
+    await axios.put(`${API_BASE_URL}/api/prompts/like/${id}`)
     fetchPrompts()
   }
+
   return (
     <div className="container">
       <Navbar />
